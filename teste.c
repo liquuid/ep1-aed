@@ -56,6 +56,7 @@ void main(void) {
     v[5] = 1;
     v[6] = 1;
     v[7] = 2;
+
     printf("decisão: %d\n", decide(arv, v));
 
     /* -------------- */

@@ -32,10 +32,9 @@ No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDe
 
     No *filho;
     No *paiAux;
-
+    No **antecessor;
+    antecessor = (No **) malloc(sizeof(No **));
     paiAux = (No *) malloc(sizeof(No *));
-
-
     paiAux = pai;
     /* reserva espaco na memória */
     filho = (No *) malloc(sizeof(No *));
@@ -60,7 +59,12 @@ No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDe
         }
         paiAux->prox = filho;
     } else {
-        paiAux->lista = filho;
+
+        if (pai->lista && pai->lista != filho ){
+            pai->lista->prox = filho;
+        } else {
+            paiAux->lista = filho;
+        }
     }
     atributoAnterior = atributoDoPai;
     return filho;
@@ -76,7 +80,6 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
         while (nAux->lista) {
 
             if (nAux->lista->atributoOuDecisao == atributo && nAux->lista->categoria == categoria) {
-                printf("buscaFilho [lista] ( %d, %d, %p) \n", atributo, categoria, antecessor);
                 *antecessor = nAux;
                 return nAux->lista;
             }
@@ -89,7 +92,6 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
         while (nAux->prox) {
 
             if (nAux->prox->atributoOuDecisao == atributo && nAux->prox->categoria == categoria) {
-                printf("buscaFilho [prox] ( %d, %d, %p) \n", atributo, categoria, antecessor);
                 *antecessor = nAux;
                 return nAux->prox;
             }
@@ -103,6 +105,30 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
 }
 
 int decide(No *arvore, int *atributos) {
+    int decisao = -1 ;
+    No *noAux;
+    noAux = (No *) malloc(sizeof(No *));
+    int i = 1;
+    noAux = arvore->lista;
+
+    while (noAux->lista || noAux->prox){
+        if(noAux->categoria == atributos[i]){
+            if (noAux->lista){
+                i = noAux->atributoOuDecisao;
+                noAux = noAux->lista;
+            } else {
+                return noAux->atributoOuDecisao;
+            }
+        } else {
+            if(noAux->prox) {
+                noAux = noAux->prox;
+                continue;
+            } else {
+                return noAux->atributoOuDecisao;
+            }
+        }
+    }
+
     printf("decide\n");
-    return 0;
+    return decisao;
 }
