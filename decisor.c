@@ -70,16 +70,35 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
     No *nAux;
     nAux = (No *) malloc(sizeof(No *));
     nAux = n;
-    while(nAux->lista){
 
-        if (nAux->lista->atributoOuDecisao == atributo && nAux->lista->categoria == categoria)
-        {
-            *antecessor = nAux;
-            return nAux->lista;
+    if (nAux->lista) {
+
+        while (nAux->lista) {
+
+            if (nAux->lista->atributoOuDecisao == atributo && nAux->lista->categoria == categoria) {
+                printf("buscaFilho [lista] ( %d, %d, %p) \n", atributo, categoria, antecessor);
+                *antecessor = nAux;
+                return nAux->lista;
+            }
+            nAux = nAux->lista;
         }
-        nAux = nAux->lista;
+
     }
-    printf("buscaFilho ( %d, %d, %p) \n", atributo, categoria, antecessor);
+    if (nAux->prox) {
+
+        while (nAux->prox) {
+
+            if (nAux->prox->atributoOuDecisao == atributo && nAux->prox->categoria == categoria) {
+                printf("buscaFilho [prox] ( %d, %d, %p) \n", atributo, categoria, antecessor);
+                *antecessor = nAux;
+                return nAux->prox;
+            }
+            nAux = nAux->prox;
+        }
+
+    }
+
+
     return NULL;
 }
 
