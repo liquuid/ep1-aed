@@ -5,10 +5,15 @@
 No *arv;
 
 void main(void) {
+
     No *aux, *aux2;
+    No *arv2;
+    No **antecessor;
+    antecessor = (No **) malloc(sizeof(No **));
     int *v;
     /* Cria árvore do exemplo */
     arv = criaArvore();
+    arv2 = arv;
     aux = criaFilho(arv, 1, 1, 3);
     criaFilho(aux, 3, 0, 1);
     criaFilho(aux, 3, 1, 0);
@@ -18,6 +23,7 @@ void main(void) {
 
     aux = criaFilho(arv, 1, 0, 5);
     criaFilho(aux, 5, 0, 3);
+
     aux2 = criaFilho(aux, 5, 1, 4);
     criaFilho(aux, 5, 2, 0);
     criaFilho(aux, 5, 3, 0);
@@ -26,6 +32,10 @@ void main(void) {
     criaFilho(aux2, 4, 1, 0);
     criaFilho(aux2, 4, 2, 2);
     criaFilho(aux2, 4, 3, 0);
+
+    printf("arv: %p \n", arv);
+    printf("buscaFilho: %p \n", buscaFilho(arv,3,1, antecessor ));
+    printf("*antecessor: %p \n", *antecessor );
 
     /* Cria um vetor de atributos */
     v = (int *) malloc(8 * sizeof(int));

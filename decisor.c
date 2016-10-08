@@ -13,31 +13,54 @@ No *criaArvore(void) {
     No *arv;
     /* reserva espaco na memória */
     arv = (No *) malloc(sizeof(No *));
-    arv->atributoOuDecisao = 0;
+    arv->atributoOuDecisao = 1;
     arv->categoria = 0;
     arv->lista = NULL;
     arv->prox = NULL;
     return arv;
 }
+
 /*
  * Cria um nó filho do nó pai, ajusta o atributo do pai, categoria e decisao do filho. Retorna o ponteiro para
  * o filho.
  */
 No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDecisao) {
-    printf("criaFilho\n");
+
 
     No *filho;
+    No *paiAux;
+    paiAux = (No *) malloc(sizeof(No *));
+    paiAux = pai;
     /* reserva espaco na memória */
     filho = (No *) malloc(sizeof(No *));
     filho->atributoOuDecisao = atributoOuDecisao;
     filho->categoria = categoriaDoFilho;
     filho->lista = NULL;
     filho->prox = NULL;
+
+    while (paiAux->lista) {
+        paiAux = paiAux->lista;
+    }
+
+    paiAux->lista = filho;
+    printf("criaFilho %p ( %d, %d, %d) \n", filho, atributoDoPai, categoriaDoFilho, atributoOuDecisao);
     return filho;
 }
 
 No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
-    printf("buscaFilho\n");
+    No *nAux;
+    nAux = (No *) malloc(sizeof(No *));
+    nAux = n;
+    while(nAux->lista){
+
+        if (nAux->lista->atributoOuDecisao == atributo && nAux->lista->categoria == categoria)
+        {
+            *antecessor = nAux;
+            return nAux->lista;
+        }
+        nAux = nAux->lista;
+    }
+    printf("buscaFilho ( %d, %d, %p) \n", atributo, categoria, antecessor);
     return NULL;
 }
 
@@ -46,6 +69,6 @@ int decide(No *arvore, int *atributos) {
     return 0;
 }
 
-int teste(){
+int teste() {
     return 0;
 }
