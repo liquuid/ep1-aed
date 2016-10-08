@@ -34,7 +34,10 @@ void main(void) {
     criaFilho(aux2, 4, 3, 0);
 
     printf("arv: %p \n", arv);
-    printf("buscaFilho: %p \n", buscaFilho(arv,3,1, antecessor ));
+    printf("buscaFilho: %p \n", buscaFilho(arv,1,0, antecessor ));
+    printf("buscaFilho: %p \n", buscaFilho(aux,2,0, antecessor ));
+    printf("buscaFilho: %p \n", buscaFilho(aux2,2,2, antecessor ));
+
     printf("*antecessor: %p \n", *antecessor );
 
     /* Cria um vetor de atributos */
