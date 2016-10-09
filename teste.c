@@ -7,13 +7,13 @@ No *arv;
 void main(void) {
 
     No *aux, *aux2;
-    No *arv2;
+
     No **antecessor;
     antecessor = (No **) malloc(sizeof(No **));
     int *v;
     /* Cria árvore do exemplo */
     arv = criaArvore();
-    arv2 = arv;
+
     aux = criaFilho(arv, 1, 1, 3);
     criaFilho(aux, 3, 0, 1);
     criaFilho(aux, 3, 1, 0);
@@ -35,15 +35,15 @@ void main(void) {
 
     printf("arv: %p \n", arv);
 
-    printf("buscaFilho: %p \n", buscaFilho(aux, 3, 0, antecessor ));
-    printf("buscaFilho: %p \n", buscaFilho(aux, 0, 2, antecessor ));
-    printf("buscaFilho: %p \n", buscaFilho(aux, 0, 3, antecessor ));
+    printf("buscaFilho: %p \n", buscaFilho(aux, 3, 0, antecessor));
+    printf("buscaFilho: %p \n", buscaFilho(aux, 0, 2, antecessor));
+    printf("buscaFilho: %p \n", buscaFilho(aux, 0, 3, antecessor));
 
-    printf("buscaFilho: %p \n", buscaFilho(aux2, 2, 0, antecessor ));
-    printf("buscaFilho: %p \n", buscaFilho(aux2, 2, 2, antecessor ));
-    printf("buscaFilho: %p \n", buscaFilho(aux2, 0, 3, antecessor ));
+    printf("buscaFilho: %p \n", buscaFilho(aux2, 2, 0, antecessor));
+    printf("buscaFilho: %p \n", buscaFilho(aux2, 2, 2, antecessor));
+    printf("buscaFilho: %p \n", buscaFilho(aux2, 0, 3, antecessor));
 
-    printf("*antecessor: %p \n", *antecessor );
+    printf("*antecessor: %p \n", *antecessor);
 
     /* Cria um vetor de atributos */
     v = (int *) malloc(8 * sizeof(int));

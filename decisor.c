@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "decisor.h"
 
+int atributoAnterior = -1;
+
 /*
  * Cria uma arvore com um unico no que corresponde a uma decisao, inicializa os campos com zero ou NULL,
  * conforme o tipo do campo. Retorna o ponteiro para esse no.
 */
-
-int atributoAnterior = -1;
 
 No *criaArvore(void) {
 
@@ -27,15 +27,15 @@ No *criaArvore(void) {
  * Cria um nó filho do nó pai, ajusta o atributo do pai, categoria e decisao do filho. Retorna o ponteiro para
  * o filho.
  */
+
 No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDecisao) {
 
 
     No *filho;
     No *paiAux;
-    No **antecessor;
-    antecessor = (No **) malloc(sizeof(No **));
     paiAux = (No *) malloc(sizeof(No *));
     paiAux = pai;
+
     /* reserva espaco na memória */
     filho = (No *) malloc(sizeof(No *));
     filho->atributoOuDecisao = atributoOuDecisao;
@@ -43,24 +43,21 @@ No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDe
     filho->lista = NULL;
     filho->prox = NULL;
 
-
-
+    /* corre a lista */
     while (paiAux->lista) {
-
         paiAux = paiAux->lista;
     }
-
-
+    
     printf("criaFilho %p ( %d, %d, %d) \n", filho, atributoDoPai, categoriaDoFilho, atributoOuDecisao);
 
-    if (atributoAnterior == atributoDoPai){
-        while (paiAux->prox){
+    if (atributoAnterior == atributoDoPai) {
+        while (paiAux->prox) {
             paiAux = paiAux->prox;
         }
         paiAux->prox = filho;
     } else {
 
-        if (pai->lista && pai->lista != filho ){
+        if (pai->lista && pai->lista != filho) {
             pai->lista->prox = filho;
         } else {
             paiAux->lista = filho;
@@ -70,6 +67,13 @@ No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDe
     return filho;
 }
 
+/*
+ * Busca, entre os filhos de n aquele com atributo e categoria dados como parâmetro. Retorna os ponteiros para o filho e
+ * seu antecessor (se houver, como \textbf{conteúdo} do parâmetro). Caso não haja antecessor atribui NULL ao conteúdo do
+ * parâmetro.  Caso não encontre filho, não há antecessor e retorna NULL.
+ *
+*/
+
 No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
     No *nAux;
     nAux = (No *) malloc(sizeof(No *));
@@ -78,7 +82,7 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
     if (nAux->lista) {
 
         while (nAux->lista) {
-
+            /* corre a lista, caso o atributo e a categoria sejam a procurada retorna o nó */
             if (nAux->lista->atributoOuDecisao == atributo && nAux->lista->categoria == categoria) {
                 *antecessor = nAux;
                 return nAux->lista;
@@ -90,7 +94,7 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
     if (nAux->prox) {
 
         while (nAux->prox) {
-
+            /* corre os próximos, caso o atributo e a categoria sejam a procurada retorna o nó */
             if (nAux->prox->atributoOuDecisao == atributo && nAux->prox->categoria == categoria) {
                 *antecessor = nAux;
                 return nAux->prox;
@@ -99,28 +103,30 @@ No *buscaFilho(No *n, int atributo, int categoria, No **antecessor) {
         }
 
     }
-
-
     return NULL;
 }
 
+/*
+ * Recebe uma árvore de decisão e um vetor de atributos e retorna a decisão computada pela árvore.
+ *
+ */
 int decide(No *arvore, int *atributos) {
-    int decisao = -1 ;
+    int decisao = -1;
     No *noAux;
     noAux = (No *) malloc(sizeof(No *));
     int i = 1;
     noAux = arvore->lista;
 
-    while (noAux->lista || noAux->prox){
-        if(noAux->categoria == atributos[i]){
-            if (noAux->lista){
+    while (noAux->lista || noAux->prox) {
+        if (noAux->categoria == atributos[i]) {
+            if (noAux->lista) {
                 i = noAux->atributoOuDecisao;
                 noAux = noAux->lista;
             } else {
                 return noAux->atributoOuDecisao;
             }
         } else {
-            if(noAux->prox) {
+            if (noAux->prox) {
                 noAux = noAux->prox;
                 continue;
             } else {
