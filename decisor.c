@@ -47,7 +47,7 @@ No *criaFilho(No *pai, int atributoDoPai, int categoriaDoFilho, int atributoOuDe
     while (paiAux->lista) {
         paiAux = paiAux->lista;
     }
-    
+
     printf("criaFilho %p ( %d, %d, %d) \n", filho, atributoDoPai, categoriaDoFilho, atributoOuDecisao);
 
     if (atributoAnterior == atributoDoPai) {
